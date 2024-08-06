@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Navigation Detector</title>
+    <style>
+        .button {
+            font-size: 30px;
+             width: 100%;
+             margin: 1rem 0;
+             padding: 1rem 0;
+             background-color: #154973;
+             color: #ffffff;
+             cursor: pointer;
+        }
+.button:hover {
+    background-color: #2269a4;
+}
+
+    </style>
 </head>
 <body>
     <h1 style="margin-top: 10vh; font-family: Arial, Helvetica, sans-serif; text-align:center">Universal Navigation Detector</h1>
@@ -11,9 +26,9 @@
     <form style="max-width:50vw; margin: 0 auto; border:3px solid rebeccapurple; padding: 2rem; background-color: whitesmoke">
         <input type="text" id="url" style="font-size: 30px; width: 100%" />
         
-        <small>ex: https://www.criminaljustice.ny.gov</small>
-        <button id="submit" style="font-size: 30px; width: 100%; margin: 1rem 0; background-color: #154973; color: #ffffff">Submit</button>
-        <div id="theresults"></div>
+        <small style="font-family: Arial, Helvetica, sans-serif;">ex: https://www.criminaljustice.ny.gov</small>
+        <button id="submit" class="button" style="">Submit</button>
+        <div id="theresults" style="font-family: Arial, Helvetica, sans-serif;"></div>
     </form>
 
     <div class="response" style="display:none;"></div>
@@ -24,7 +39,11 @@
     submitButton.addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById("theresults").innerHTML = "";
-        gettheURL();
+        try {
+            gettheURL();
+        } catch (error) {
+            console.log("error message");
+        }
 
     });
 
@@ -32,12 +51,26 @@ async function gettheURL(){
     let theURL = document.getElementById("url").value;
     // console.log(theURL);
     const url = 'https://corsproxy.io/?' + encodeURIComponent(theURL);
-    const response = await fetch(url);
-    const body = await response.text();
-    // console.log(response);
+    try {
+        console.log(url);
+        const response = await fetch(url);
+        console.log(response);
+        if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    } else {
+            const body = await response.text();
+        console.log(response);
 
-    document.querySelector('.response').innerHTML = body;
+    var bodyContents = body.split('<body');//no >,å body could have a property
+
+    document.querySelector('.response').innerHTML = bodyContents[1];
+
     checkUnav(theURL);
+    }
+} catch (error) {
+    console.error(error.message);
+    document.getElementById("theresults").innerHTML = "<p style='padding:2rem 1rem; background-color: pink; border: 3px solid red;'>❌ Detection failed. Please check that you are using the full URL including or excluding www. and https.";
+  }
 }
 
 function checkUnav(url){
@@ -82,7 +115,7 @@ function checkUnav(url){
     // Create the popup container
     var popup = document.createElement('div');
     popup.className = "popup";
-    popup.style.cssText = "position: relative; top: 20px;z-index: 10000;padding: 40px 24px 12px 24px;background-color: rgb(255, 255, 255);box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;font-family: Arial, sans-serif;border-radius: 15px;";
+    popup.style.cssText = "position: relative; top: 20px;z-index: 10000;padding: 40px 24px 12px 24px;background-color: rgb(255, 255, 255);box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;font-family: Arial, sans-serif;";
 
     // Create the close button
     var closeButton = document.createElement('button');

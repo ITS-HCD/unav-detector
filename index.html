@@ -77,7 +77,7 @@ function checkUnav(url){
     var isHTTPS = /https/.test(url) ? '✅ true' : '❌ false';
 
     // Check if the site is a *.ny.gov domain
-    var isNYGov = /\.ny\.gov$/.test(url) ? '✅ true' : '❌ false';
+    var isNYGov = /\.ny\.gov/.test(url) ? '✅ true' : '❌ false';
 
     // Create the popup container
     var popup = document.createElement('div');

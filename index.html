@@ -39,12 +39,8 @@
     submitButton.addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById("theresults").innerHTML = "";
-        try {
-            gettheURL();
-        } catch (error) {
-            console.log("error message");
-        }
-
+        gettheURL();
+ 
     });
 
 async function gettheURL(){
@@ -52,14 +48,14 @@ async function gettheURL(){
     // console.log(theURL);
     const url = 'https://corsproxy.io/?' + encodeURIComponent(theURL);
     try {
-        console.log(url);
+        // console.log(url);
         const response = await fetch(url);
-        console.log(response);
+        // console.log(response);
         if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     } else {
             const body = await response.text();
-        console.log(response);
+       // console.log(response);
 
     var bodyContents = body.split('<body');//no >,å body could have a property
 
@@ -68,7 +64,7 @@ async function gettheURL(){
     checkUnav(theURL);
     }
 } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     document.getElementById("theresults").innerHTML = "<p style='padding:2rem 1rem; background-color: pink; border: 3px solid red;'>❌ Detection failed. Please check that you are using the full URL including or excluding www. and https.";
   }
 }

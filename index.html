@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Navigation Detector</title>
+</head>
+<body>
+    <h1 style="margin-top: 10vh; font-family: Arial, Helvetica, sans-serif; text-align:center">Universal Navigation Detector</h1>
+    <p style=" font-family: Arial, Helvetica, sans-serif; text-align:center"">Visit your website, and copy/paste the full location into the box below.</p>
+    <form style="max-width:50vw; margin: 0 auto; border:3px solid rebeccapurple; padding: 2rem; background-color: whitesmoke">
+        <input type="text" id="url" style="font-size: 30px; width: 100%" />
+        
+        <small>ex: https://www.criminaljustice.ny.gov</small>
+        <button id="submit" style="font-size: 30px; width: 100%; margin: 1rem 0; background-color: #154973; color: #ffffff">Submit</button>
+        <div id="theresults"></div>
+    </form>
+
+    <div class="response" style="display:none;"></div>
+
+    <script>
+    const submitButton = document.getElementById("submit");
+
+    submitButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById("theresults").innerHTML = "";
+        gettheURL();
+
+    });
+
+async function gettheURL(){
+    let theURL = document.getElementById("url").value;
+    // console.log(theURL);
+    const url = 'https://corsproxy.io/?' + encodeURIComponent(theURL);
+    const response = await fetch(url);
+    const body = await response.text();
+    // console.log(response);
+
+    document.querySelector('.response').innerHTML = body;
+    checkUnav(theURL);
+}
+
+function checkUnav(url){
+    // console.log(url);
+    // Check for the presence of the UNav Header elements
+    var divElement = document.getElementById('nygov-universal-navigation');
+    var iframeElement = document.getElementById('nygov-universal-navigation-frame');
+    var unavHeaderType = 'Undetermined 🟥';
+    if (divElement) {
+        unavHeaderType = 'Script 🟢';
+    } else if (iframeElement) {
+        unavHeaderType = 'Iframe 🔷';
+    }
+
+    // Check for the presence of the UNav Footer elements
+    // Check for the presence of the UNav Header elements
+    var divElement = document.getElementById('nygov-universal-navigation');
+    var iframeElement = document.getElementById('nygov-universal-navigation-frame');
+    var unavHeaderType = 'Undetermined 🟥';
+    if (divElement) {
+        unavHeaderType = 'Script 🟢';
+    } else if (iframeElement) {
+        unavHeaderType = 'Iframe 🔷';
+    }
+
+    // Check for the presence of the UNav Footer elements
+    var footerElement = document.getElementById('nygov-universal-footer');
+    var iframeFooterElement = document.querySelector('iframe[src="//static-assets.ny.gov/load_global_footer/ajax?iframe=true"]');
+    var unavFooterType = 'Undetermined 🟥';
+    if (footerElement) {
+        unavFooterType = 'Script 🟢';
+    } else if (iframeFooterElement && !footerElement) {
+        unavFooterType = 'Iframe 🔷';
+    }
+
+    // Check if the site is using HTTPS
+    var isHTTPS = /https/.test(url) ? '✅ true' : '❌ false';
+
+    // Check if the site is a *.ny.gov domain
+    var isNYGov = /\.ny\.gov$/.test(url) ? '✅ true' : '❌ false';
+
+    // Create the popup container
+    var popup = document.createElement('div');
+    popup.className = "popup";
+    popup.style.cssText = "position: relative; top: 20px;z-index: 10000;padding: 40px 24px 12px 24px;background-color: rgb(255, 255, 255);box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;font-family: Arial, sans-serif;border-radius: 15px;";
+
+    // Create the close button
+    var closeButton = document.createElement('button');
+    closeButton.textContent = '✕';
+    closeButton.style.cssText = "position: absolute;padding: 6px 8px;font-size: 18px;border: none;background: none;cursor: pointer;top: 0;right: 0;";
+    closeButton.onclick = function() {
+        popup.parentNode.removeChild(popup);
+    };
+    popup.appendChild(closeButton);
+
+    // Add UNav Header and Footer information
+    var unavContent = document.createElement('div');
+    unavContent.style.clear = 'both';
+    unavContent.innerHTML = '<div style="margin-bottom:10px;"><strong>UNav Header:</strong> ' + unavHeaderType + '</div>' +
+                            '<div style="margin-bottom:10px;"><strong>UNav Footer:</strong> ' + unavFooterType + '</div>';
+    popup.appendChild(unavContent);
+
+    // UNav uses an _NY object to define settings (like hiding search)
+    // Display hideSettings and hideSearch information if available
+    if (typeof _NY !== 'undefined') {
+        var hideSettings = _NY.hideSettings ? '✅ true' : '❌ false';
+        var hideSearch = _NY.hideSearch ? '✅ true' : '❌ false';
+        var settingsContent = document.createElement('div');
+        settingsContent.style.fontSize = '0.85rem';
+        settingsContent.innerHTML = '<hr style="border: 0; height: 1px; background-color: #e0e0e0; margin: 10px 0;">' +
+                                    '<div style="margin-bottom:10px;"><strong>hideSettings:</strong> ' + hideSettings + '</div>' +
+                                    '<div style="margin-bottom:10px;"><strong>hideSearch:</strong> ' + hideSearch + '</div>';
+        popup.appendChild(settingsContent);
+    }
+
+    // Add HTTPS and NY.gov domain checks
+    var additionalChecks = document.createElement('div');
+    additionalChecks.style.fontSize = '0.85rem';
+    additionalChecks.innerHTML = '<hr style="border: 0; height: 1px; background-color: #e0e0e0; margin: 10px 0;">' +
+                                 '<div style="margin-bottom:10px;"><strong>Using HTTPS:</strong> ' + isHTTPS + '</div>' +
+                                 '<div style="margin-bottom:10px;"><strong>NY.gov Domain:</strong> ' + isNYGov + '</div>';
+    popup.appendChild(additionalChecks);
+
+    // Append the popup to the body
+    document.getElementById("theresults").appendChild(popup);
+};
+    </script>
+</body>
+</html>

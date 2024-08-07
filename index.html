@@ -65,7 +65,7 @@ async function gettheURL(){
     }
 } catch (error) {
     // console.error(error.message);
-    document.getElementById("theresults").innerHTML = "<p style='padding:2rem 1rem; background-color: pink; border: 3px solid red;'>❌ Detection failed. Please check that you are using the full URL including or excluding www. and https.";
+    document.getElementById("theresults").innerHTML = "<div style='padding:2rem 1rem; background-color: pink; border: 3px solid red;'>❌ Detection failed. Please check that you are using the full URL. <ul><li>Try including or excluding www.</li><li> Make sure you are using HTTPS if it is a secure site</li></ul><br>If you still experience issues, reach out to the Design System team</div>";
   }
 }
 

@@ -39,12 +39,8 @@
     submitButton.addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById("theresults").innerHTML = "";
-        try {
-            gettheURL();
-        } catch (error) {
-            console.log("error message");
-        }
-
+        gettheURL();
+ 
     });
 
 async function gettheURL(){
@@ -52,14 +48,14 @@ async function gettheURL(){
     // console.log(theURL);
     const url = 'https://corsproxy.io/?' + encodeURIComponent(theURL);
     try {
-        console.log(url);
+        // console.log(url);
         const response = await fetch(url);
-        console.log(response);
+        // console.log(response);
         if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     } else {
             const body = await response.text();
-        console.log(response);
+       // console.log(response);
 
     var bodyContents = body.split('<body');//no >,å body could have a property
 
@@ -68,7 +64,7 @@ async function gettheURL(){
     checkUnav(theURL);
     }
 } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     document.getElementById("theresults").innerHTML = "<p style='padding:2rem 1rem; background-color: pink; border: 3px solid red;'>❌ Detection failed. Please check that you are using the full URL including or excluding www. and https.";
   }
 }
@@ -78,39 +74,39 @@ function checkUnav(url){
     // Check for the presence of the UNav Header elements
     var divElement = document.getElementById('nygov-universal-navigation');
     var iframeElement = document.getElementById('nygov-universal-navigation-frame');
-    var unavHeaderType = 'Undetermined 🟥';
+    var unavHeaderType = 'Undetermined 🟥 — Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
     if (divElement) {
-        unavHeaderType = 'Script 🟢';
+        unavHeaderType = 'Script 🟢 — The script will update automatically. No action needed!';
     } else if (iframeElement) {
-        unavHeaderType = 'Iframe 🔷';
+        unavHeaderType = 'Iframe 🔷 — The iframe implementation is no longer supported. Please update to script version.';
     }
 
     // Check for the presence of the UNav Footer elements
     // Check for the presence of the UNav Header elements
     var divElement = document.getElementById('nygov-universal-navigation');
     var iframeElement = document.getElementById('nygov-universal-navigation-frame');
-    var unavHeaderType = 'Undetermined 🟥';
+    var unavHeaderType = '🚫 Undetermined — Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
     if (divElement) {
-        unavHeaderType = 'Script 🟢';
+        unavHeaderType = '✅ Script — The script will update automatically. No action needed!';
     } else if (iframeElement) {
-        unavHeaderType = 'Iframe 🔷';
+        unavHeaderType = '🚫 Iframe — The iframe implementation is no longer supported. Please update to script version.';
     }
 
     // Check for the presence of the UNav Footer elements
     var footerElement = document.getElementById('nygov-universal-footer');
     var iframeFooterElement = document.querySelector('iframe[src="//static-assets.ny.gov/load_global_footer/ajax?iframe=true"]');
-    var unavFooterType = 'Undetermined 🟥';
+    var unavFooterType = '🚫 Undetermined — Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
     if (footerElement) {
-        unavFooterType = 'Script 🟢';
+        unavFooterType = '✅ Script — The script will update automatically. No action needed!';
     } else if (iframeFooterElement && !footerElement) {
-        unavFooterType = 'Iframe 🔷';
+        unavFooterType = '🚫 Iframe — The iframe implementation is no longer supported. Please update to script version.';
     }
 
     // Check if the site is using HTTPS
-    var isHTTPS = /https/.test(url) ? '✅ true' : '❌ false';
+    var isHTTPS = /https/.test(url) ? '✅ true — Secure connection. No action needed!' : '🚫 false — Not a secure connection. Please migrate to HTTPS.';
 
     // Check if the site is a *.ny.gov domain
-    var isNYGov = /\.ny\.gov/.test(url) ? '✅ true' : '❌ false';
+    var isNYGov = /\.ny\.gov/.test(url) ? '✅ true — Approved domain. No action needed!' : '🚫 false — Not an approved domain. Please contact the Design System team for more information.';
 
     // Create the popup container
     var popup = document.createElement('div');
@@ -139,7 +135,6 @@ function checkUnav(url){
         var hideSettings = _NY.hideSettings ? '✅ true' : '❌ false';
         var hideSearch = _NY.hideSearch ? '✅ true' : '❌ false';
         var settingsContent = document.createElement('div');
-        settingsContent.style.fontSize = '0.85rem';
         settingsContent.innerHTML = '<hr style="border: 0; height: 1px; background-color: #e0e0e0; margin: 10px 0;">' +
                                     '<div style="margin-bottom:10px;"><strong>hideSettings:</strong> ' + hideSettings + '</div>' +
                                     '<div style="margin-bottom:10px;"><strong>hideSearch:</strong> ' + hideSearch + '</div>';
@@ -148,7 +143,6 @@ function checkUnav(url){
 
     // Add HTTPS and NY.gov domain checks
     var additionalChecks = document.createElement('div');
-    additionalChecks.style.fontSize = '0.85rem';
     additionalChecks.innerHTML = '<hr style="border: 0; height: 1px; background-color: #e0e0e0; margin: 10px 0;">' +
                                  '<div style="margin-bottom:10px;"><strong>Using HTTPS:</strong> ' + isHTTPS + '</div>' +
                                  '<div style="margin-bottom:10px;"><strong>NY.gov Domain:</strong> ' + isNYGov + '</div>';

@@ -367,7 +367,6 @@
         .nys-button {
             font-size: var(--font-size-60);
             width: 100%;
-            margin: var(--space-stack-m);
             padding: var(--space-inset-stretch-m);
             background-color: var(--color-bg-primary);
             border: var(--color-border-primary);
@@ -385,7 +384,9 @@
             outline-color: var(--color-focus);
             outline-offset: 3px;
         }
-
+        .nys-button + div:not(:empty) {
+            margin-top: var(--space-l);
+        }
         .nys-alert {
             position: relative;
             padding: var(--space-inset-m);

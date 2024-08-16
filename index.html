@@ -323,20 +323,39 @@
         }
 
 
-        /* Simple CSS Reset */
-        *{box-sizing:border-box}html,body{height:100%;font-family:sans-serif}img,picture,video,canvas,svg{display:block;max-width:100%}input,button,textarea,select{font:inherit}a{color:inherit}    
+        /* ============== Simple CSS Reset */
+
+        *{box-sizing:border-box}html,body{margin: 0;padding:0;}img,picture,video,canvas,svg{display:block;max-width:100%}input,button,textarea,select{font:inherit}a{color:inherit}    
+
+        /* ============== Global Styles */
 
         body {
             font-family: var(--font-family-sans);
-            margin: 0;
-            padding: var(--space-inset-l);
             background-color: var(--color-bg);
         }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--space-inset-l);
+        }
+
+        a {
+            color: var(--color-link);
+        }
+        a:hover {
+            color: var(--color-link-hovered);
+        }
+        a:active {
+            color: var(--color-link-pressed);
+        }
+
+        /* ============== Components */
+
         .nys-form {
             display: flex;
             flex-direction: column;
-            margin: 0 auto;
-            max-width: 720px;
+            margin: 0 auto var(--space-l);
             padding: var(--space-inset-l);
             background-color: var(--neutral-100);
         }
@@ -417,29 +436,23 @@
             border-radius: var(--radius-md);
             cursor: pointer;
         }
-        a {
-            color: var(--color-link);
-        }
-        a:hover {
-            color: var(--color-link-hovered);
-        }
-        a:active {
-            color: var(--color-link-pressed);
-        }
+
 
     </style>
 </head>
 <body>
-    <h1 class="nys-h1">Universal Navigation Detector</h1>
-    <p class="nys-subtitle">Visit your website, and copy/paste the full location into the box below.</p>
-    <form class="nys-form">
-        <label for="url" class="nys-u-visually-hidden">Enter URL</label>
-        <input type="text" id="url" class="nys-form__input" aria-describedby="url-example" aria-label="URL input field" />
-        <small id="url-example">ex: https://www.criminaljustice.ny.gov</small>
-        <button id="submit" class="nys-button">Submit</button>
-        <div id="theresults" aria-live="polite"></div>
-    </form>
-
+    <div class="container">
+        <h1 class="nys-h1">New York State UNav Detector</h1>
+        <p class="nys-subtitle">Copy/paste a URL into the box below to check what version of <br>the NYS Universal Navigation (UNav) it uses.</p>
+        <form class="nys-form">
+            <label for="url" class="nys-u-visually-hidden">Enter URL</label>
+            <input type="text" id="url" class="nys-form__input" aria-describedby="url-example" aria-label="URL input field" />
+            <small id="url-example">ex: https://www.criminaljustice.ny.gov</small>
+            <button id="submit" class="nys-button">Submit</button>
+            <div id="theresults" aria-live="polite"></div>
+        </form>
+        <small>⚠️ If the UNav Detector reports <b>"Undetermined"</b> but it looks like the site you're checking has a UNav at the top, it has probably been recreated manually. If you are unable to use the script embed on your site, please request an exception via our <a href="https://bit.ly/unav-intake">UNav intake form</a>.</small>
+    </div>
     <div class="response" style="display:none;" aria-hidden="true"></div>
 
     <script>

@@ -74,11 +74,11 @@ function checkUnav(url){
     // Check for the presence of the UNav Header elements
     var divElement = document.getElementById('nygov-universal-navigation');
     var iframeElement = document.getElementById('nygov-universal-navigation-frame');
-    var unavHeaderType = 'Undetermined 🟥 — Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
+    var unavHeaderType = '🟥 Undetermined: Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
     if (divElement) {
-        unavHeaderType = 'Script 🟢 — The script will update automatically. No action needed!';
+        unavHeaderType = '🟢 Script: The script will update automatically. No action needed!';
     } else if (iframeElement) {
-        unavHeaderType = 'Iframe 🔷 — The iframe implementation is no longer supported. Please update to script version.';
+        unavHeaderType = '🔷 Iframe: The iframe implementation is no longer supported. Please update to script version.';
     }
 
     // Check for the presence of the UNav Footer elements
@@ -95,18 +95,18 @@ function checkUnav(url){
     // Check for the presence of the UNav Footer elements
     var footerElement = document.getElementById('nygov-universal-footer');
     var iframeFooterElement = document.querySelector('iframe[src="//static-assets.ny.gov/load_global_footer/ajax?iframe=true"]');
-    var unavFooterType = '🚫 Undetermined — Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
+    var unavFooterType = '🚫 Undetermined: Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
     if (footerElement) {
-        unavFooterType = '✅ Script — The script will update automatically. No action needed!';
+        unavFooterType = '✅ Script: The script will update automatically. No action needed!';
     } else if (iframeFooterElement && !footerElement) {
-        unavFooterType = '🚫 Iframe — The iframe implementation is no longer supported. Please update to script version.';
+        unavFooterType = '🚫 Iframe: The iframe implementation is no longer supported. Please update to script version.';
     }
 
     // Check if the site is using HTTPS
-    var isHTTPS = /https/.test(url) ? '✅ true — Secure connection. No action needed!' : '🚫 false — Not a secure connection. Please migrate to HTTPS.';
+    var isHTTPS = /https/.test(url) ? '✅ True: Secure connection. No action needed!' : '🚫 False: Not a secure connection. Please migrate to HTTPS.';
 
     // Check if the site is a *.ny.gov domain
-    var isNYGov = /\.ny\.gov/.test(url) ? '✅ true — Approved domain. No action needed!' : '🚫 false — Not an approved domain. Please contact the Design System team for more information.';
+    var isNYGov = /\.ny\.gov/.test(url) ? '✅ True: Approved domain. No action needed!' : '🚫 False: Not an approved domain. Please contact the Design System team for more information.';
 
     // Create the popup container
     var popup = document.createElement('div');
@@ -132,8 +132,8 @@ function checkUnav(url){
     // UNav uses an _NY object to define settings (like hiding search)
     // Display hideSettings and hideSearch information if available
     if (typeof _NY !== 'undefined') {
-        var hideSettings = _NY.hideSettings ? '✅ true' : '❌ false';
-        var hideSearch = _NY.hideSearch ? '✅ true' : '❌ false';
+        var hideSettings = _NY.hideSettings ? '✅ True' : '❌ False';
+        var hideSearch = _NY.hideSearch ? '✅ True' : '❌ False';
         var settingsContent = document.createElement('div');
         settingsContent.innerHTML = '<hr style="border: 0; height: 1px; background-color: #e0e0e0; margin: 10px 0;">' +
                                     '<div style="margin-bottom:10px;"><strong>hideSettings:</strong> ' + hideSettings + '</div>' +

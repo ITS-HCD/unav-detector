@@ -5,150 +5,525 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Navigation Detector</title>
     <style>
-        .button {
-            font-size: 30px;
-             width: 100%;
-             margin: 1rem 0;
-             padding: 1rem 0;
-             background-color: #154973;
-             color: #ffffff;
-             cursor: pointer;
+        :root {
+            /* ========================= Color */
+
+            /* Color: Semantic */
+
+            /* === Defaults */ 
+
+            /* Background */
+            --color-bg: var(--white);
+            --color-bg-disabled: var(--neutral-100);
+            /* Text */
+            --color-text: var(--black);
+            --color-text-hovered: var(--neutral-800);
+            --color-text-pressed: var(--neutral-900);
+            --color-text-disabled: var(--neutral-400);
+            /* Borders */
+            --color-border: var(--neutral-300);
+            --color-border-hovered: var(--neutral-800);
+            --color-border-pressed: var(--neutral-500);
+            --color-border-disabled: var(--neutral-300);
+            /* Icons */
+            --color-icon: var(--black);
+            --color-icon-hovered: var(--neutral-800);
+            --color-icon-pressed: var(--neutral-900);
+            --color-icon-disabled: var(--neutral-400);
+
+            /* === Theme */
+
+            /* Backgrounds */
+            --color-bg-primary: var(--nys-blue-700);
+            --color-bg-primary-hovered: var(--nys-blue-800);
+            --color-bg-primary-pressed: var(--nys-blue-900);
+            --color-bg-secondary: var(--nys-yellow-400);
+            --color-bg-secondary-hovered: var(--nys-yellow-500);
+            --color-bg-secondary-pressed: var(--nys-yellow-600);
+            --color-bg-outline: var(--white);
+            --color-bg-outline-hovered: var(--white);
+            --color-bg-outline-pressed: var(--white);
+
+            /* Icons */
+            --color-icon-primary: var(--nys-blue-700);
+            --color-icon-primary-hovered: var(--nys-blue-800);
+            --color-icon-primary-pressed: var(--nys-blue-900);
+            --color-icon-secondary: #000;
+            --color-icon-secondary-hovered: #000;
+            --color-icon-secondary-pressed: #000;
+            --color-icon-outline: var(--nys-blue-700);
+            --color-icon-outline-hovered: #0F3350;
+            --color-icon-outline-pressed: #0B2439;
+
+            /* Borders */
+            --color-border-primary: var(--nys-blue-700);
+            --color-border-primary-hovered: var(--nys-blue-800);
+            --color-border-primary-pressed: var(--nys-blue-900);
+            --color-border-secondary: var(--nys-yellow-400);
+            --color-border-secondary-hovered: var(--nys-yellow-500);
+            --color-border-secondary-pressed: var(--nys-yellow-600);
+
+            /* === State */
+
+            /* Backgrounds */
+            --color-bg-danger: var(--red-100);
+            --color-bg-warning: var(--yellow-100);
+            --color-bg-success: var(--green-100);
+            --color-bg-info: var(--blue-100);
+
+            /* Text */
+            --color-text-danger: var(--red-900);
+            --color-text-warning: var(--yellow-900);
+            --color-text-success: var(--green-900);
+            --color-text-info: var(--blue-900);
+
+            /* Borders */
+            --color-border-danger: var(--red-500);
+            --color-border-warning: var(--yellow-500);
+            --color-border-success: var(--green-500);
+            --color-border-info: var(--blue-500);
+            
+            /* === Link */
+
+            --color-link: #004DD1;
+            --color-link-hovered: #0000cc;
+            --color-link-pressed: #000099;
+            --color-link-visited: #551a8b;
+            --color-link-inverted: #ffffff;
+
+            /* === Misc */
+            --color-text-inverted: #ffffff;
+            --color-text-light: #ffffff;
+            --color-text-dark: #000000;
+            --color-focus: #004DD1;
+
+            /* === Color: Primitives */
+
+            --nys-blue-100: #E1E8ED;
+            --nys-blue-200: #AEC0CF;
+            --nys-blue-300: #7F9BB2;
+            --nys-blue-400: #5F829F;
+            --nys-blue-500: #376487;
+            --nys-blue-600: #1B4E77;
+            --nys-blue-700: #154973;
+            --nys-blue-800: #103756;
+            --nys-blue-900: #0A2134;
+
+            /* Error Red */
+
+            --red-100: #faebe9;
+            --red-200: #EFC2BD;
+            --red-300: #E9AEA8;
+            --red-400: #D2726A;
+            --red-500: #BF4641;
+            --red-600: #B52C2C;
+            --red-700: #861E1E;
+            --red-800: #6F1717;
+            --red-900: #300505;
+
+            /* Information Blue */
+            --blue-100: #E6EEFD;
+            --blue-200: #B5CCF6;
+            --blue-300: #9CBBF2;
+            --blue-400: #3D75DE;
+            --blue-500: #004DD1;
+            --blue-600: #003EA7;
+            --blue-700: #002E7D;
+            --blue-800: #001F54;
+            --blue-900: #000F2A;
+
+            /* Warn Yellow */
+            --nys-yellow-100: #FEF0B3;
+            --nys-yellow-200: #FCE266;
+            --nys-yellow-300: #FBD833;
+            --nys-yellow-400: #FACE00;
+            --nys-yellow-500: #E1B900;
+            --nys-yellow-600: #C8A500;
+            --nys-yellow-700: #967C00;
+            --nys-yellow-800: #645200;
+            --nys-yellow-900: #322900;
+
+            /* Success Green */
+
+            --green-100: #E9F1E9;
+            --green-200: #D2E3D5;
+            --green-300: #A5C8AB;
+            --green-400: #78AC82;
+            --green-500: #4B9158;
+            --green-600: #1B6929;
+            --green-700: #155220;
+            --green-800: #0F3B17;
+            --green-900: #09230E;
+
+            /* Neutral Color Ramp Variables */
+            --white: #fff;
+            --neutral-50: #f5f5f5;
+            --neutral-100: #ededed;
+            --neutral-200: #c6c6c6;
+            --neutral-300: #ababab;
+            --neutral-400: #919191;
+            --neutral-500: #777777;
+            --neutral-600: #5e5e5e;
+            --neutral-700: #474747;
+            --neutral-800: #303030;
+            --neutral-900: #1b1b1b;
+            --black: #000;
+
+            /* ========================= Radius */
+
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+
+            /* ========================= Sizing */
+
+            /* For stacking elements vertically */
+
+            --space-stack-xs: 0 0 4px 0;
+            --space-stack-s: 0 0 8px 0;
+            --space-stack-m: 0 0 16px 0;
+            --space-stack-l: 0 0 32px 0;
+            --space-stack-xl: 0 0 64px 0;
+            --space-stack: var(--space-stack-m);
+
+            /* For stacking elements horizontally */
+
+            --space-inline-xs: 0 4px 0 0;
+            --space-inline-s: 0 8px 0 0;
+            --space-inline-m: 0 16px 0 0;
+            --space-inline-l: 0 32px 0 0;
+            --space-inline-xl: 0 64px 0 0;
+            --space-inline: var(--space-inline-m);
+
+            /* For insetting content from the edges of a container */
+
+            --space-inset-xs: 4px 4px 4px 4px;
+            --space-inset-s: 8px 8px 8px 8px;
+            --space-inset-m: 16px 16px 16px 16px;
+            --space-inset-l: 32px 32px 32px 32px;
+            --space-inset-xl: 64px 64px 64px 64px;
+            --space-inset: var(--space-inset-m);
+
+            /* For squishing content towards the center of a container */
+
+            --space-inset-squish-s: 4px 8px 8px 4px;
+            --space-inset-squish-m: 8px 16px 16px 8px;
+            --space-inset-squish-l: 16px 32px 32px 16px;
+            --space-inset-squish: var(--space-inset-squish-m);
+
+            /* For stretching content away from the center of a container */
+
+            --space-inset-stretch-s: 8px 12px 8px 12px;
+            --space-inset-stretch-m: 16px 24px 16px 24px;
+            --space-inset-stretch-l: 32px 48px 32px 48px;
+            --space-inset-stretch: var(--space-inset-stretch-m);
+
+            /* General Spacing */
+
+            --space-xs: 4px;
+            --space-s: 8px;
+            --space-m: 16px;
+            --space-l: 32px;
+            --space-xl: 64px;
+            --space: var(--space-m);
+
+
+            /* ========================= Typography */
+
+            /* Font Size Variables */
+            --font-size-10: 12px;
+            --font-size-20: 14px;
+            --font-size-30: 16px;
+            --font-size-40: 18px;
+            --font-size-50: 20px;
+            --font-size-60: 24px;
+            --font-size-70: 32px;
+            --font-size-80: 40px;
+            --font-size-90: 48px;
+
+            /* Font Family Variables */
+            --font-family-sans: 'Arial', sans-serif;
+            --font-family-serif: 'Times New Roman', serif;
+            --font-family-mono: 'Courier New', monospace;
+
         }
-.button:hover {
-    background-color: #2269a4;
-}
+
+        /* ============== Simple Utility Classes */
+
+        /* Visually Hidden */
+        .nys-u-visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Sizing */
+
+        .nys-u-stack {
+            margin: var(--space-stack);
+        }
+        .nys-u-stack-xs {
+            margin: var(--space-stack-xs);
+        }
+        .nys-u-stack-s {
+            margin: var(--space-stack-s);
+        }
+        .nys-u-stack-m {
+            margin: var(--space-stack-m);
+        }
+        .nys-u-stack-l {
+            margin: var(--space-stack-l);
+        }
+        .nys-u-stack-xl {
+            margin: var(--space-stack-xl);
+        }
+
+        .nys-u-inline {
+            margin: var(--space-inline);
+        }
+        .nys-u-inline-xs {
+            margin: var(--space-inline-xs);
+        }
+        .nys-u-inline-s {
+            margin: var(--space-inline-s);
+        }
+        .nys-u-inline-m {
+            margin: var(--space-inline-m);
+        }
+        .nys-u-inline-l {
+            margin: var(--space-inline-l);
+        }
+        .nys-u-inline-xl {
+            margin: var(--space-inline-xl);
+        }
+
+        .nys-u-inset {
+            padding: var(--space-inset);
+        }
+        .nys-u-inset-xs {
+            padding: var(--space-inset-xs);
+        }
+        .nys-u-inset-s {
+            padding: var(--space-inset-s);
+        }
+        .nys-u-inset-m {
+            padding: var(--space-inset-m);
+        }
+        .nys-u-inset-l {
+            padding: var(--space-inset-l);
+        }
+        .nys-u-inset-xl {
+            padding: var(--space-inset-xl);
+        }
+
+
+        /* Simple CSS Reset */
+        *{box-sizing:border-box}html,body{height:100%;font-family:sans-serif}img,picture,video,canvas,svg{display:block;max-width:100%}input,button,textarea,select{font:inherit}a{color:inherit}    
+
+        body {
+            font-family: var(--font-family-sans);
+            margin: 0;
+            padding: var(--space-inset-l);
+            background-color: var(--color-bg);
+        }
+        .nys-form {
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            max-width: 720px;
+            padding: var(--space-inset-l);
+            background-color: var(--neutral-100);
+        }
+        .nys-form__input {
+            font-size: var(--font-size-60);
+            width: 100%;
+            margin: var(--space-stack-s);
+            padding: var(--space-inset-s);
+            border: 1px solid var(--color-border);
+            border-radius: 0;
+        }
+        small {
+            font-size: var(--font-size-20);
+            color: var(--neutral-600);
+            margin: var(--space-stack-m);
+        }
+        .nys-h1 {
+            text-align: center;
+            font-size: var(--font-size-80);
+            margin: var(--space-stack-s);
+            padding: var(--space-l) 0 0 0;
+        }
+        .nys-subtitle {
+            text-align: center;
+            font-size: var(--font-size-40);
+            margin: var(--space-stack-l);
+        }
+        .nys-button {
+            font-size: var(--font-size-60);
+            width: 100%;
+            margin: var(--space-stack-m);
+            padding: var(--space-inset-stretch-m);
+            background-color: var(--color-bg-primary);
+            border: var(--color-border-primary);
+            border-radius: var(--radius-md);
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .nys-button:hover {
+            background-color: var(--color-bg-primary-hovered);
+        }
+        .nys-button:active {
+            background-color: var(--color-bg-primary-pressed);
+        }
+        .nys-button:focus {
+            outline-color: var(--color-focus);
+            outline-offset: 3px;
+        }
+
+        .nys-alert {
+            position: relative;
+            padding: var(--space-inset-m);
+            background-color: var(--color-bg-info);
+            border: 1px solid var(--color-border-info);
+        }    
+        .nys-alert--danger {
+            background-color: var(--color-bg-danger);
+            border: 1px solid var(--color-border-danger);
+        }
+        .nys-alert > div:last-child div:last-child {
+            margin-bottom: 0;
+        }
+        .nys-divider {
+            border: none;
+            border-top: 1px solid var(--color-border);
+            background-color: transparent;
+            margin: var(--space-stack-m);
+            width: 100%;
+        }
+        .nys-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: var(--space-inset-s);
+            background-color: transparent;
+            border: 0;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+        a {
+            color: var(--color-link);
+        }
+        a:hover {
+            color: var(--color-link-hovered);
+        }
+        a:active {
+            color: var(--color-link-pressed);
+        }
 
     </style>
 </head>
 <body>
-    <h1 style="margin-top: 10vh; font-family: Arial, Helvetica, sans-serif; text-align:center">Universal Navigation Detector</h1>
-    <p style=" font-family: Arial, Helvetica, sans-serif; text-align:center"">Visit your website, and copy/paste the full location into the box below.</p>
-    <form style="max-width:50vw; margin: 0 auto; border:3px solid rebeccapurple; padding: 2rem; background-color: whitesmoke">
-        <input type="text" id="url" style="font-size: 30px; width: 100%" />
-        
-        <small style="font-family: Arial, Helvetica, sans-serif;">ex: https://www.criminaljustice.ny.gov</small>
-        <button id="submit" class="button" style="">Submit</button>
-        <div id="theresults" style="font-family: Arial, Helvetica, sans-serif;"></div>
+    <h1 class="nys-h1">Universal Navigation Detector</h1>
+    <p class="nys-subtitle">Visit your website, and copy/paste the full location into the box below.</p>
+    <form class="nys-form">
+        <label for="url" class="nys-u-visually-hidden">Enter URL</label>
+        <input type="text" id="url" class="nys-form__input" aria-describedby="url-example" aria-label="URL input field" />
+        <small id="url-example">ex: https://www.criminaljustice.ny.gov</small>
+        <button id="submit" class="nys-button">Submit</button>
+        <div id="theresults" aria-live="polite"></div>
     </form>
 
-    <div class="response" style="display:none;"></div>
+    <div class="response" style="display:none;" aria-hidden="true"></div>
 
     <script>
-    const submitButton = document.getElementById("submit");
+const submitButton = document.getElementById("submit");
 
-    submitButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById("theresults").innerHTML = "";
-        gettheURL();
- 
-    });
+submitButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById("theresults").innerHTML = "";
+    gettheURL();
+});
 
 async function gettheURL(){
     let theURL = document.getElementById("url").value;
-    // console.log(theURL);
     const url = 'https://corsproxy.io/?' + encodeURIComponent(theURL);
     try {
-        // console.log(url);
         const response = await fetch(url);
-        // console.log(response);
         if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    } else {
+            throw new Error(`Response status: ${response.status}`);
+        } else {
             const body = await response.text();
-       // console.log(response);
-
-    var bodyContents = body.split('<body');//no >,å body could have a property
-
-    document.querySelector('.response').innerHTML = bodyContents[1];
-
-    checkUnav(theURL);
+            var bodyContents = body.split('<body');
+            document.querySelector('.response').innerHTML = bodyContents[1];
+            checkUnav(theURL);
+        }
+    } catch (error) {
+        document.getElementById("theresults").innerHTML = "<div class='nys-alert nys-alert--danger'>❌ <b>Detection failed.</b> Please check that you are using the full URL. <ul><li>Try including or excluding 'www'</li><li>Include 'https' for secure sites</li></ul>If you are still experiencing issues, <a href='https://bit.ly/unav-intake' target='_blank'>contact the Design System team</a> for more information.</div>";
     }
-} catch (error) {
-    // console.error(error.message);
-    document.getElementById("theresults").innerHTML = "<div style='padding:2rem 1rem; background-color: pink; border: 3px solid red;'>❌ Detection failed. Please check that you are using the full URL. <ul><li>Try including or excluding www.</li><li> Make sure you are using HTTPS if it is a secure site</li></ul><br>If you still experience issues, reach out to the Design System team</div>";
-  }
 }
 
 function checkUnav(url){
-    // console.log(url);
-    // Check for the presence of the UNav Header elements
     var divElement = document.getElementById('nygov-universal-navigation');
     var iframeElement = document.getElementById('nygov-universal-navigation-frame');
-    var unavHeaderType = '🟥 Undetermined: Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
+    var unavHeaderType = '<b>🚫 Undetermined</b> – Couldn\'t find UNav Header. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or <a href="https://bit.ly/unav-intake" target="_blank">contact Design System team</a> for more information.';
     if (divElement) {
-        unavHeaderType = '🟢 Script: The script will update automatically. No action needed!';
+        unavHeaderType = '<b>✅ Script</b> – The script will update automatically. No action needed!';
     } else if (iframeElement) {
-        unavHeaderType = '🔷 Iframe: The iframe implementation is no longer supported. Please update to script version.';
+        unavHeaderType = '<b>🚫 Iframe</b> – The iframe implementation is no longer supported. Please update to script version.';
     }
 
-    // Check for the presence of the UNav Footer elements
-    // Check for the presence of the UNav Header elements
-    var divElement = document.getElementById('nygov-universal-navigation');
-    var iframeElement = document.getElementById('nygov-universal-navigation-frame');
-    var unavHeaderType = '🚫 Undetermined — Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
-    if (divElement) {
-        unavHeaderType = '✅ Script — The script will update automatically. No action needed!';
-    } else if (iframeElement) {
-        unavHeaderType = '🚫 Iframe — The iframe implementation is no longer supported. Please update to script version.';
-    }
-
-    // Check for the presence of the UNav Footer elements
     var footerElement = document.getElementById('nygov-universal-footer');
     var iframeFooterElement = document.querySelector('iframe[src="//static-assets.ny.gov/load_global_footer/ajax?iframe=true"]');
-    var unavFooterType = '🚫 Undetermined: Couldn\'t find UNav. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or contact Design System team for more information.';
+    var unavFooterType = '<b>🚫 Undetermined</b> – Couldn\'t find UNav Footer. It either doesn\'t exist on the page or has been custom recreated. Update to script implementation or <a href="https://bit.ly/unav-intake" target="_blank">contact Design System team</a> for more information.';
     if (footerElement) {
-        unavFooterType = '✅ Script: The script will update automatically. No action needed!';
+        unavFooterType = '<b>✅ Script</b> – The script will update automatically. No action needed!';
     } else if (iframeFooterElement && !footerElement) {
-        unavFooterType = '🚫 Iframe: The iframe implementation is no longer supported. Please update to script version.';
+        unavFooterType = '<b>🚫 Iframe</b> – The iframe implementation is no longer supported. Please update to script version.';
     }
 
-    // Check if the site is using HTTPS
-    var isHTTPS = /https/.test(url) ? '✅ True: Secure connection. No action needed!' : '🚫 False: Not a secure connection. Please migrate to HTTPS.';
+    var isHTTPS = /https/.test(url) ? '<b>✅ True</b> – Secure connection. No action needed!' : '<b>🚫 False: Not a secure connection.</b> Please migrate to HTTPS.';
+    var isNYGov = /\.ny\.gov/.test(url) ? '<b>✅ True</b> – Approved domain. No action needed!' : '<b>🚫 False: Not an approved domain.</b> Please <a href="https://bit.ly/unav-intake" target="_blank">contact the Design System team</a> for more information.';
 
-    // Check if the site is a *.ny.gov domain
-    var isNYGov = /\.ny\.gov/.test(url) ? '✅ True: Approved domain. No action needed!' : '🚫 False: Not an approved domain. Please contact the Design System team for more information.';
-
-    // Create the popup container
     var popup = document.createElement('div');
-    popup.className = "popup";
-    popup.style.cssText = "position: relative; top: 20px;z-index: 10000;padding: 40px 24px 12px 24px;background-color: rgb(255, 255, 255);box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;font-family: Arial, sans-serif;";
+    popup.className = "nys-alert";
 
-    // Create the close button
     var closeButton = document.createElement('button');
     closeButton.textContent = '✕';
-    closeButton.style.cssText = "position: absolute;padding: 6px 8px;font-size: 18px;border: none;background: none;cursor: pointer;top: 0;right: 0;";
+    closeButton.className = "nys-close";
+    
     closeButton.onclick = function() {
         popup.parentNode.removeChild(popup);
     };
     popup.appendChild(closeButton);
 
-    // Add UNav Header and Footer information
     var unavContent = document.createElement('div');
     unavContent.style.clear = 'both';
-    unavContent.innerHTML = '<div style="margin-bottom:10px;"><strong>UNav Header:</strong> ' + unavHeaderType + '</div>' +
-                            '<div style="margin-bottom:10px;"><strong>UNav Footer:</strong> ' + unavFooterType + '</div>';
+    unavContent.innerHTML = '<div class="nys-u-stack"><b>UNav Header:</b> ' + unavHeaderType + '</div>' +
+                            '<div class="nys-u-stack"><b>UNav Footer:</b> ' + unavFooterType + '</div>';
     popup.appendChild(unavContent);
 
-    // UNav uses an _NY object to define settings (like hiding search)
-    // Display hideSettings and hideSearch information if available
     if (typeof _NY !== 'undefined') {
         var hideSettings = _NY.hideSettings ? '✅ True' : '❌ False';
         var hideSearch = _NY.hideSearch ? '✅ True' : '❌ False';
         var settingsContent = document.createElement('div');
-        settingsContent.innerHTML = '<hr style="border: 0; height: 1px; background-color: #e0e0e0; margin: 10px 0;">' +
-                                    '<div style="margin-bottom:10px;"><strong>hideSettings:</strong> ' + hideSettings + '</div>' +
-                                    '<div style="margin-bottom:10px;"><strong>hideSearch:</strong> ' + hideSearch + '</div>';
+        settingsContent.innerHTML = '<hr class="nys-divider">' +
+                                    '<div class="nys-u-stack"><b>hideSettings:</b> ' + hideSettings + '</div>' +
+                                    '<div class="nys-u-stack"><b>hideSearch:</b> ' + hideSearch + '</div>';
         popup.appendChild(settingsContent);
     }
 
-    // Add HTTPS and NY.gov domain checks
     var additionalChecks = document.createElement('div');
-    additionalChecks.innerHTML = '<hr style="border: 0; height: 1px; background-color: #e0e0e0; margin: 10px 0;">' +
-                                 '<div style="margin-bottom:10px;"><strong>Using HTTPS:</strong> ' + isHTTPS + '</div>' +
-                                 '<div style="margin-bottom:10px;"><strong>NY.gov Domain:</strong> ' + isNYGov + '</div>';
+    additionalChecks.innerHTML = '<hr class="nys-divider">' +
+                                 '<div class="nys-u-stack"><b>Using HTTPS:</b> ' + isHTTPS + '</div>' +
+                                 '<div class="nys-u-stack"><b>NY.gov Domain:</b> ' + isNYGov + '</div>';
     popup.appendChild(additionalChecks);
 
-    // Append the popup to the body
     document.getElementById("theresults").appendChild(popup);
 };
     </script>

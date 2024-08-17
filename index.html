@@ -456,7 +456,7 @@
     <div class="response" style="display:none;" aria-hidden="true"></div>
 
     <script>
-const submitButton = document.getElementById("submit");
+const submitButton = document.querySelector('.nys-button:not(:empty)');
 
 submitButton.addEventListener('click', function(e) {
     e.preventDefault();

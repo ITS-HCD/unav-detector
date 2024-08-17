@@ -518,8 +518,8 @@ function checkUnav(url){
 
     var unavContent = document.createElement('div');
     unavContent.style.clear = 'both';
-    unavContent.innerHTML = '<div class="nys-u-stack"><b>UNav Header:</b> ' + unavHeaderType + '</div>' +
-                            '<div class="nys-u-stack"><b>UNav Footer:</b> ' + unavFooterType + '</div>';
+    unavContent.innerHTML = '<p><b>UNav Header:</b> ' + unavHeaderType + '</p>' +
+                            '<p><b>UNav Footer:</b> ' + unavFooterType + '</p>';
     popup.appendChild(unavContent);
 
     if (typeof _NY !== 'undefined') {
@@ -527,15 +527,15 @@ function checkUnav(url){
         var hideSearch = _NY.hideSearch ? '✅ True' : '❌ False';
         var settingsContent = document.createElement('div');
         settingsContent.innerHTML = '<hr class="nys-divider">' +
-                                    '<div class="nys-u-stack"><b>hideSettings:</b> ' + hideSettings + '</div>' +
-                                    '<div class="nys-u-stack"><b>hideSearch:</b> ' + hideSearch + '</div>';
+                                    '<p><b>hideSettings:</b> ' + hideSettings + '</p>' +
+                                    '<p><b>hideSearch:</b> ' + hideSearch + '</p>';
         popup.appendChild(settingsContent);
     }
 
     var additionalChecks = document.createElement('div');
     additionalChecks.innerHTML = '<hr class="nys-divider">' +
-                                 '<div class="nys-u-stack"><b>Using HTTPS:</b> ' + isHTTPS + '</div>' +
-                                 '<div class="nys-u-stack"><b>NY.gov Domain:</b> ' + isNYGov + '</div>';
+                                 '<p><b>Using HTTPS:</b> ' + isHTTPS + '</p>' +
+                                 '<p><b>NY.gov Domain:</b> ' + isNYGov + '</p>';
     popup.appendChild(additionalChecks);
 
     document.getElementById("theresults").appendChild(popup);

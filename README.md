@@ -10,7 +10,7 @@ The UNav Detector runs the following checks:
 - Does the site belong to a `*.ny.gov` domain?
 
 > [!NOTE] 
-> If the UNav Detector reports "🟥 Undetermined," but it looks like the site you're checking has a UNav at the top, it has probably been recreated manually. If you are unable to use the script embed on your site, please [request an exception via our UNav intake form](https://bit.ly/unav-intake).
+> If the UNav Detector reports "🚫 Undetermined," but it looks like the site you're checking has a UNav at the top, it has probably been recreated manually. If you are unable to use the script embed on your site, please [request an exception via our UNav intake form](https://bit.ly/unav-intake).
 
 ## Usage
 
@@ -23,7 +23,7 @@ The UNav Detector runs the following checks:
 
 ### Results
 
-- **UNav Header and Footer:** If this comes back as **🟢 Script**, you don't need to take any action — the script will update automatically. However, if this comes back as **🔷 Iframe** or **🟥 Undetermined**, you will need to update. If your site's platform does not allow for script embeds, please [request an exception via our UNav intake form](https://bit.ly/unav-intake).
+- **UNav Header and Footer:** If this comes back as **✅ Script**, you don't need to take any action — the script will update automatically. However, if this comes back as **🚫 Iframe** or **🚫 Undetermined**, you will need to update. If your site's platform does not allow for script embeds, please [request an exception via our UNav intake form](https://bit.ly/unav-intake).
 - **HTTPS Check:** This is a straightforward check to see if the site is using a secure connection. If this comes back as **Not Using HTTPS (❌)**, your site will need to be updated to protect users from potential security risks before you can use the UNav.
 - **NY.gov Domain Check:** Is this site a `*.ny.gov` site? If this comes back as **Not a NY.gov Domain (❌)**, you will not be able to use to NYS UNav.
 

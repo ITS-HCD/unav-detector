@@ -456,9 +456,17 @@
     <div class="response" style="display:none;" aria-hidden="true"></div>
 
     <script>
-const submitButton = document.querySelector('.nys-button:not(:empty)');
+const submitButton = document.querySelector('.nys-button');
 
 submitButton.addEventListener('click', function(e) {
+    let urlInput = document.getElementById("url").value.trim();
+    
+    // Don't submit if URL input is empty
+    if (urlInput === "") {
+        e.preventDefault(); // Stop the form from submitting
+        return; // Exit the function
+    }
+    
     e.preventDefault();
     document.getElementById("theresults").innerHTML = "";
     gettheURL();

@@ -474,7 +474,7 @@ submitButton.addEventListener('click', function(e) {
 
 async function gettheURL(){
     let theURL = document.getElementById("url").value;
-    const url = 'https://corsproxy.io/?' + encodeURIComponent(theURL);
+    const url = 'https://unav-check-4267f5352cff.herokuapp.com/' + encodeURIComponent(theURL);
     try {
         const response = await fetch(url);
         if (!response.ok) {
